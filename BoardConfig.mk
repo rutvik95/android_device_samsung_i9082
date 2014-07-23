@@ -68,10 +68,6 @@ BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DCAPRI_HWC
 
-# Bootanimation
-TARGET_BOOTANIMATION_PRELOAD := true
-TARGET_BOOTANIMATION_TEXTURE_CACHE := true
-
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
@@ -79,18 +75,15 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/i9082/ril/
 
+# TWRP
+DEVICE_RESOLUTION := 480x800
+
 # Recovery
 TARGET_RECOVERY_FSTAB := device/samsung/i9082/fstab.capri_ss_baffin
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.capri
-
-# CMHW
-BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/i9082/cmhw/
-
-# GPS
-TARGET_SPECIFIC_HEADER_PATH := device/samsung/i9082/include
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \

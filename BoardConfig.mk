@@ -82,6 +82,18 @@ DEVICE_RESOLUTION := 480x800
 TARGET_RECOVERY_FSTAB := device/samsung/i9082/fstab.capri_ss_baffin
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 
+#TWRP
+DEVICE_RESOLUTION := 480x800
+RECOVERY_SDCARD_ON_DATA := true
+TW_INTERNAL_STORAGE_PATH := "/data/media/emulated/0"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+TW_EXTERNAL_STORAGE_PATH := "/sdcard1"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "sdcard1"
+TW_HAS_DOWNLOAD_MODE := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TW_IGNORE_MAJOR_AXIS_0 := true
+HAVE_SELINUX := true
+
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.capri
 

@@ -42,18 +42,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
 	setup_fs
 
-# F2FS
-PRODUCT_PACKAGES += \
-	mkfs.f2fs \
-	fsck.f2fs \
-	fibmap.f2fs
-
-# Filesystem management tools
-PRODUCT_PACKAGES += \
-	setup_fs \
-	e2fsck
-
-
 # Usb accessory
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
@@ -72,11 +60,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	charger \
 	charger_res_images
-
-# recovery
-PRODUCT_COPY_FILES += \
-	$(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab
-
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \

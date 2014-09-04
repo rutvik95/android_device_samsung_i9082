@@ -9,14 +9,22 @@ $(call inherit-product-if-exists, vendor/samsung/i9082/i9082-vendor.mk)
 PRODUCT_LOCALES += hdpi
 
 DEVICE_PACKAGE_OVERLAYS += device/samsung/i9082/overlay
+
+
+#kernel config
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := kernel/samsung/i9082
+	LOCAL_KERNEL := kernel/samsung/i9082
 else
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
 
 PRODUCT_COPY_FILES := \
 $(LOCAL_KERNEL):kernel
+
+
+
+
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/i9082/init.capri_ss_baffin.rc:root/init.capri_ss_baffin.rc \

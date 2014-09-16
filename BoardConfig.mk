@@ -26,10 +26,11 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1610612736
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 4404019200
 BOARD_FLASH_BLOCK_SIZE := 131072
 
+
 #Resolution
 DEVICE_RESOLUTION := 480x800
 
-# Kernel
+#kernel
 TARGET_KERNEL_CONFIG := cyanogenmod_i9082_defconfig
 
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -90,6 +91,7 @@ TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_stora
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.capri
+
 
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/i9082/cmhw/

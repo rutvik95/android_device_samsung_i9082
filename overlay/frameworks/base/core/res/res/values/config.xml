@@ -95,6 +95,14 @@
     <!-- Default blink frequency for notification LED is 9 seconds. -->
     <integer name="config_defaultNotificationLedOff">9000</integer>
 
+<<<<<<< HEAD
+=======
+    <string-array name="config_locationProviderPackageNames" translatable="false">
+        <item>com.android.location.fused</item>
+        <item>com.google.android.location</item>
+    </string-array>
+
+>>>>>>> 95ffa07ea903237470822dfd0dd2e126114a866e
     <!-- XXXXX NOTE THE FOLLOWING RESOURCES USE THE WRONG NAMING CONVENTION.
          Please don't copy them, copy anything else. -->
 
@@ -196,9 +204,7 @@
     <!-- Boolean to enable stk functionality on Samsung phones -->
     <bool name="config_samsung_stk">true</bool>
 
-    <!-- Device supports LED flashlight -->
-
-    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+   <!-- Hardware 'face' keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
              1 - Home
@@ -214,4 +220,5 @@
     <bool name="config_enableLockScreenTranslucentDecor">true</bool>
 
     <!-- Whether to enable auto provisioning the app for new SIM card on boot.-->
+
 </resources>

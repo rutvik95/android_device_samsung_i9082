@@ -3,10 +3,15 @@
 /boot                        emmc                 /dev/block/mmcblk0p5                                   flags=display="Boot";backup=1;wipeingui
 /recovery                    emmc                 /dev/block/mmcblk0p6
 /cache                       ext4                 /dev/block/mmcblk0p18                                  flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
+/cache                       f2fs      		  /dev/block/mmcblk0p18					 rw,discard,nosuid,nodev,noatime,nodiratime,inline_xattr wait
 /system                      ext4                 /dev/block/mmcblk0p19                                  flags=display="System";backup=1;wipeingui
+/system                      f2fs      	          /dev/block/mmcblk0p19 				 ro,discard,nosuid,nodev,noatime,nodiratime,inline_xattr wait
 /data                        ext4                 /dev/block/mmcblk0p21                                  length=-16384 flags=display="Data";backup=1;wipeingui;wipeduringfactoryreset
+/data              	     f2fs      		  /dev/block/mmcblk0p21       rw,discard,nosuid,nodev,noatime,nodiratime,inline_xattr wait,nonremovable,check,encryptable=/dev/block/mmcblk0p21			
 /preload                     ext4                 /dev/block/mmcblk0p20                                  flags=backup=1
 /sdcard                      datamedia            /dev/null                                              flags=display="Internal Storage";storage
 /external_sd                 auto                 /dev/block/mmcblk1p1       /dev/block/mmcblk1          flags=display="External Storage";removable;storage
 /modem                       emmc                 /dev/block/mmcblk0p7
+
+
 

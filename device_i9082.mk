@@ -14,7 +14,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/i9082/init.log.rc:root/init.log.rc \
 	device/samsung/i9082/init.recovery.capri_ss_baffin.rc:root/init.recovery.capri_ss_baffin.rc \
 	device/samsung/i9082/ueventd.capri_ss_baffin.rc:root/ueventd.capri_ss_baffin.rc \
-	device/samsung/i9082/fstab.capri_ss_baffin:root/fstab.capri_ss_baffin \
+       #device/samsung/i9082/fstab.capri_ss_baffin:root/fstab.capri_ss_baffin \
 
 PRODUCT_COPY_FILES += \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
@@ -41,7 +41,16 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
+
 # Audio modules
+
+
+
+# TWRP
+PRODUCT_COPY_FILES += \
+$(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab
+
+# Misc other modules
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \

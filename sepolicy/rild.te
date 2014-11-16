@@ -1,0 +1,7 @@
+allow rild self:capability dac_override;
+
+# TODO: fixme... doesn't work
+allow rild gps_data_file:fifo_file rw_file_perms;
+allow rild system_data_file:dir rw_dir_perms;
+allow rild system_data_file:file rw_file_perms;
+

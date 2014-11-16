@@ -1,3 +1,21 @@
-# Graphics
-/dev/vchiq                                          u:object_r:powervr_device:s0
-/dev/vc-lmk                                         u:object_r:powervr_device:s0
+/dev/vchiq                                          u:object_r:gpu_device:s0
+/dev/vc-lmk                                         u:object_r:gpu_device:s0
+/dev/vcsm                                           u:object_r:gpu_device:s0
+/dev/vc-dnfo                                        u:object_r:gpu_device:s0
+/dev/vc-omx                                         u:object_r:video_device:s0
+/dev/vc-cma                                         u:object_r:video_device:s0
+
+/dev/bcm_irpc                                       u:object_r:radio_device:s0
+/dev/mpu6k                                          u:object_r:sensors_device:s0
+/dev/proximity                                      u:object_r:sensors_device:s0
+
+/sys/class/rfkill/rfkill0/state --                  u:object_r:sysfs_bluetooth_writable:s0
+/sys/class/rfkill/rfkill0/type --                   u:object_r:sysfs_bluetooth_writable:s0
+
+/dev/ttyS2                                          u:object_r:hci_attach_dev:s0
+
+/dev/bcm_log                                        u:object_r:radio_device:s0
+/dev/block/mmcblk0p1                                u:object_r:radio_device:s0
+
+# TODO: need to call restorecon?
+/proc/bcm_fuse_net_config                           u:object_r:radio_device:s0

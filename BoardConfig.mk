@@ -93,9 +93,14 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/i9082/cmhw/
 # GPS
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/i9082/include
 
+# Compat
+TARGET_USES_LOGD := false
+
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/i9082/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     file_contexts \
+	property_contexts \
+	rild.te \

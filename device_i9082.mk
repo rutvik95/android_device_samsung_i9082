@@ -16,11 +16,13 @@ PRODUCT_COPY_FILES += \
 	device/samsung/i9082/init.bcm281x5.usb.rc:root/init.bcm281x5.usb.rc \
 	device/samsung/i9082/init.log.rc:root/init.log.rc \
 	device/samsung/i9082/init.recovery.capri_ss_baffin.rc:root/init.recovery.capri_ss_baffin.rc \
-	device/samsung/i9082/lpm.rc:root/lpm.rc \
 	device/samsung/i9082/ueventd.capri_ss_baffin.rc:root/ueventd.capri_ss_baffin.rc \
 	device/samsung/i9082/fstab.capri_ss_baffin:root/fstab.capri_ss_baffin \
 
 PRODUCT_COPY_FILES += \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
 	device/samsung/i9082/media_codecs.xml:system/etc/media_codecs.xml \
 
 # Prebuilt kl keymaps
@@ -40,12 +42,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
-# Misc other modules
+# Audio modules
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
-	audio_policy.capri
+
+USE_CUSTOM_AUDIO_POLICY := 1
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
@@ -54,7 +57,6 @@ PRODUCT_PACKAGES += \
 
 # Charger
 PRODUCT_PACKAGES += \
-	charger \
 	charger_res_images
 
 # Wi-Fi

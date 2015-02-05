@@ -110,6 +110,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.multisim.config=dsds \
     ro.telephony.call_ring.multiple=0 \
     ro.telephony.call_ring=0 \
+    
+    
+    
+# OTA Updates
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.ota.romname=resurrection-remix \
+    ro.ota.version=20150205 \
+    ro.ota.manifest=https://romhut.com/roms/resurrection-remix/ota.xml
+    
+
+#OTA UPDATER app
+PRODUCT_COPY_FILES += \
+    device/samsung/i9082/OTAUpdates/base.apk:system/priv-app/OTAUpdates/base.apk \
+    device/samsung/i9082/OTAUpdates/lib/arm/libbypass.so:system/priv-app/OTAUpdates/lib/arm/libbypass.so \
+
 
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector

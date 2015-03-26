@@ -1,12 +1,12 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
-
 $(call inherit-product-if-exists, vendor/samsung/i9082/i9082-vendor.mk)
 
-# Use high-density artwork where available
-PRODUCT_LOCALES += hdpi
+# FIXME: This allows only hdpi resources to be included, saving space.
+#        However, some bug caused holo apps' menu, checkboxes and
+#        other widgets to be transparent.
+# PRODUCT_AAPT_CONFIG := normal hdpi
+# PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 DEVICE_PACKAGE_OVERLAYS += device/samsung/i9082/overlay
 
@@ -16,12 +16,16 @@ PRODUCT_COPY_FILES += \
 	device/samsung/i9082/init.bcm281x5.usb.rc:root/init.bcm281x5.usb.rc \
 	device/samsung/i9082/init.log.rc:root/init.log.rc \
 	device/samsung/i9082/init.recovery.capri_ss_baffin.rc:root/init.recovery.capri_ss_baffin.rc \
-	device/samsung/i9082/lpm.rc:root/lpm.rc \
 	device/samsung/i9082/ueventd.capri_ss_baffin.rc:root/ueventd.capri_ss_baffin.rc \
        #device/samsung/i9082/fstab.capri_ss_baffin:root/fstab.capri_ss_baffin \
 
 PRODUCT_COPY_FILES += \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
 	device/samsung/i9082/media_codecs.xml:system/etc/media_codecs.xml \
+	device/samsung/i9082/audio_policy.conf:system/etc/audio_policy.conf \
 
 # Prebuilt kl keymaps
 PRODUCT_COPY_FILES += \
@@ -41,17 +45,18 @@ PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
 
-
 # TWRP
 PRODUCT_COPY_FILES += \
 $(LOCAL_PATH)/twrp.fstab:recovery/root/etc/twrp.fstab
 
 # Misc other modules
+
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
-	audio_policy.capri
+
+USE_CUSTOM_AUDIO_POLICY := 1
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
@@ -60,8 +65,14 @@ PRODUCT_PACKAGES += \
 
 # Charger
 PRODUCT_PACKAGES += \
-	charger \
 	charger_res_images
+
+# Wi-Fi
+PRODUCT_PACKAGES += \
+	dhcpcd.conf \
+	hostapd \
+	wpa_supplicant \
+	wpa_supplicant.conf
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -120,6 +131,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
+
+# Override phone-hdpi-512-dalvik-heap to match value on stock
+# - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
+# (property override must come before included property)
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapgrowthlimit=56m \
 
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk

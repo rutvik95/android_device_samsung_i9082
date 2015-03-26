@@ -264,7 +264,6 @@ on boot
     chown system system /proc/bcm_fuse_net_config
     chown system system /dev/block/mmcblk0
     chmod 0660 /dev/block/mmcblk0
-    chown system system /dev/mem
 
     # 1280x720 TV for now
     setprop brcm.hwc.external-res 1280x720
@@ -402,6 +401,18 @@ on boot
     chmod 0644 /efs/h2k.dat
     mkdir /data/misc/radio/hatp 0775 radio system
 
+on charger
+    # set cpu governor to powersave while in charging mode
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+    # EHCI runtime enable for LPA
+    write /sys/devices/platform/s5p-ehci/power/control auto
+
+    chmod 0660 /proc/vc
+    chmod 0660 /proc/vc/display
+    chmod 0660 /proc/vc/display/vchiq_control
+    write /proc/vc/display/vchiq_control "earlysuspctrl "
+    write /proc/vc/display/vchiq_control "autosuspend "
+
 on fs
     mount_all /fstab.capri_ss_baffin
     setprop ro.crypto.fuse_sdcard true
@@ -432,6 +443,7 @@ on fs
     chown system radio /sys/class/sec/switch/adc
 
 on post-fs
+    restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
 
@@ -443,13 +455,6 @@ service setup_fs /system/bin/setup_fs \
     user root
     group root
     oneshot
-
-#at_distributor for making file for factory.
-service at_distributor /system/bin/at_distributor
-	class main
-	user root
-	group root
-	oneshot
 
 # geomagneticd
 service geomagneticd /system/bin/geomagneticd
@@ -465,13 +470,18 @@ service capri-ril-daemon /system/bin/rild
     user root
     group radio cache inet misc audio system sdcard_rw log sdcard_r
 
+service charger /sbin/healthd -c
+    class charger
+    critical
+    seclabel u:r:healthd:s0
+
 # create virtual SD card at /storage/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
     class late_start
 
-service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
     -e/data/misc/wifi/entropy.bin \
@@ -485,7 +495,7 @@ service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service p2p_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant \
+service p2p_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
@@ -550,14 +560,6 @@ service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
     user gps
     group system sdcard_rw inet root radio wifi
 
-# Run ATX over UART
-service console_atx /system/bin/atx -l -d
-    class main
-    console
-#    oneshot
-    user system
-    group vpn net_admin net_raw radio system sdcard_rw log mount
-
 # tvserver
 service tvserver /system/bin/tvserver
     class main
@@ -577,12 +579,6 @@ service bkmgrd /system/bin/bkmgrd
     oneshot
     user root
     group radio system log
-
-## Run atxd daemon, which needs group permissions to run in non-root mode.
-#service atxd /system/bin/atxd
-#    class main
-#    user system
-#    group input vpn net_admin net_raw radio system sdcard_rw
 
 # Add VCLMK (Videocore Low Memory Killer) service
 service vclmk /system/bin/vclmk -s

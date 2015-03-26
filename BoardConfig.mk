@@ -22,9 +22,19 @@ TARGET_USERIMAGES_USE_EXT4 := true
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1610612736
+
+# This is actually 1610612736, but reducing to 1049 MB to support users using repartition.
+# Feel free to increase when needed
+# See: http://forum.xda-developers.com/showpost.php?p=55293011&postcount=1
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1099956224
+
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 4404019200
+BOARD_CACHEIMAGE_PARTITION_SIZE := 1073741824
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # Kernel
 TARGET_KERNEL_CONFIG := cyanogenmod_i9082_defconfig
@@ -82,7 +92,7 @@ BOARD_EGL_CFG := device/samsung/i9082/egl.cfg
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DCAPRI_HWC
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DCAPRI_HWC -DREFBASE_JB_MR1_COMPAT_SYMBOLS
 
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -98,6 +108,7 @@ BOARD_RIL_CLASS := ../../../device/samsung/i9082/ril/
 # Recovery
 TARGET_RECOVERY_FSTAB := device/samsung/i9082/fstab.capri_ss_baffin
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
+TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd.capri
@@ -108,9 +119,30 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/i9082/cmhw/
 # GPS
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/i9082/include
 
+# Compat
+TARGET_USES_LOGD := false
+
+# jemalloc causes a lot of random crash on free()
+MALLOC_IMPL := dlmalloc
+
 # SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/i9082/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     file_contexts \
+    property_contexts \
+    service_contexts \
+    bkmgrd.te \
+    device.te \
+    geomagneticd.te \
+    gpsd.te \
+    init.te \
+    immvibed.te \
+    kernel.te \
+    macloader.te \
+    rild.te \
+    shell.te \
+    system_server.te \
+    tvserver.te \
+    vclmk.te \

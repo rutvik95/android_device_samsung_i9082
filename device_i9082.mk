@@ -111,6 +111,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.multiple=0 \
     ro.telephony.call_ring=0 \
 
+#OTAUpdates
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.ota.romname=RR_LP \
+    ro.ota.version=20150405 \
+    ro.ota.manifest=http://rutvikrajagopal.com/downloads/i9082/rr/ota.xml\
+    
+PRODUCT_COPY_FILES += \
+    device/samsung/i9082/OTAUpdates/base.apk:system/priv-app/OTAUpdates/base.apk \
+    device/samsung/i9082/OTAUpdates/lib/arm/libbypass.so:system/priv-app/OTAUpdates/lib/arm/libbypass.so \
+
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
 PRODUCT_PROPERTY_OVERRIDES += \
